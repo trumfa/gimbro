@@ -46,9 +46,10 @@ const state = {
 // ──────────────────────────────────────────────
 async function api(accion, data = {}) {
   const resp = await fetch(CONFIG.API_URL, {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ accion, data, token: CONFIG.TOKEN })
+    method:   'POST',
+    redirect: 'follow',
+    headers:  { 'Content-Type': 'text/plain' },
+    body:     JSON.stringify({ accion, data, token: CONFIG.TOKEN })
   });
   const json = await resp.json();
   if (!json.ok) throw new Error(json.error || 'Error en la API');

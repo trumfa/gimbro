@@ -1,0 +1,8 @@
+# Archivo de configuración con token secreto — NO subir
+config.js
+
+# Dependencias y archivos del sistema
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

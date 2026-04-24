@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1E5AB4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GymLogger">
+  <title>GymLogger</title>
+
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ── Pantalla de carga ── -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-logo">💪</div>
+    <div class="loading-title">GymLogger</div>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- ── App principal ── -->
+  <div id="app" class="app hidden"></div>
+
+  <!-- ── Toast notifications ── -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ── Overlay de confirmación ── -->
+  <div id="confirm-overlay" class="overlay hidden">
+    <div class="confirm-box">
+      <p id="confirm-msg"></p>
+      <div class="confirm-btns">
+        <button id="confirm-cancel" class="btn btn-ghost">Cancelar</button>
+        <button id="confirm-ok"     class="btn btn-danger">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Overlay de descanso (fullscreen) ── -->
+  <div id="rest-overlay" class="rest-overlay hidden">
+    <div class="rest-content">
+      <div class="rest-label" id="rest-exercise-name">Ejercicio</div>
+      <div class="rest-next"  id="rest-next-serie">Próxima serie: 2</div>
+      <div class="rest-circle-wrap">
+        <svg class="rest-svg" viewBox="0 0 120 120">
+          <circle class="rest-track" cx="60" cy="60" r="54" />
+          <circle class="rest-progress" id="rest-svg-circle" cx="60" cy="60" r="54"
+                  stroke-dasharray="339.3" stroke-dashoffset="0"/>
+        </svg>
+        <div class="rest-time" id="rest-countdown">02:00</div>
+      </div>
+      <div class="rest-adjust">
+        <button class="btn btn-ghost" onclick="ajustarDescanso(-30)">−30s</button>
+        <button class="btn btn-ghost" onclick="ajustarDescanso(30)">+30s</button>
+      </div>
+      <button class="btn btn-outline-white" onclick="saltarDescanso()">Saltar descanso ⏭</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

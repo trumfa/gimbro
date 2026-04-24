@@ -1,6 +1,6 @@
 // sw.js — Service Worker: caché + alertas de descanso
 
-const CACHE_NAME = 'gymlogger-v1';
+const CACHE_NAME = 'gymlogger-v2';
 const ASSETS = ['/', '/index.html', '/app.js', '/styles.css', '/manifest.json'];
 
 // ─── INSTALACIÓN ─────────────────────────────────────────────────────────────

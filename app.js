@@ -46,10 +46,9 @@ const state = {
 // ──────────────────────────────────────────────
 async function api(accion, data = {}) {
   const resp = await fetch(CONFIG.API_URL, {
-    method:   'POST',
-    redirect: 'follow',
-    headers:  { 'Content-Type': 'text/plain' },
-    body:     JSON.stringify({ accion, data, token: CONFIG.TOKEN })
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ accion, data, token: CONFIG.TOKEN })
   });
   const json = await resp.json();
   if (!json.ok) throw new Error(json.error || 'Error en la API');
@@ -449,6 +448,15 @@ async function deleteExercise(id) {
 }
 
 function redimensionarImagen(file, maxPx = 800) {
+  // GIFs: skip canvas (canvas breaks animation and can fail on some browsers)
+  if (file.type === 'image/gif') {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload  = e => resolve(e.target.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
   return new Promise(resolve => {
     const img = new Image();
     const url = URL.createObjectURL(file);
@@ -866,7 +874,6 @@ function buildSetRow(ejData, slideIdx, setIdx, lastHist) {
       <input class="set-input" type="number" step="0.5" min="0" placeholder="${toDisplay(pesoPre) || 'kg'}" value="${done ? toDisplay(existing.pesoReal) : (toDisplay(pesoPre) || '')}" ${done ? 'disabled' : ''}>
       <input class="set-input" type="number" min="1" placeholder="${repsPre}" value="${done ? existing.repsReales : repsPre}" ${done ? 'disabled' : ''}>
       <input class="set-rpe-input" type="number" step="0.5" min="6" max="10" placeholder="@RPE" value="${done && existing.rpeReal ? existing.rpeReal : ''}" ${done ? 'disabled' : ''}>
-      <button class="set-notes-btn" onclick="editSetNote(${slideIdx},${setIdx})" title="Notas">📝</button>
       <button class="set-check ${done ? 'check-anim' : ''}" id="check-${slideIdx}-${setIdx}" onclick="onCheck(${slideIdx},${setIdx})" ${done ? 'disabled' : ''}>
         ${done ? '✓' : '○'}
       </button>
